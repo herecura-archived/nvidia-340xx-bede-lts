@@ -6,11 +6,11 @@ _pkgname=nvidia
 pkgname=$_pkgname-340xx-bede-lts
 pkgver=340.93
 _extramodules=4.1-BEDE-LTS-external
-pkgrel=4
+pkgrel=5
 pkgdesc="NVIDIA 340xx drivers for linux-bede-lts"
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
-makedepends=('linux-bede-lts>=4.1.12' 'linux-bede-lts<4.2' 'linux-bede-lts-headers>=4.1' 'linux-bede-lts-headers<4.2' "nvidia-340xx-utils=$pkgver" "nvidia-340xx-libgl=$pkgver")
+makedepends=('linux-bede-lts>=4.1.13' 'linux-bede-lts<4.2' 'linux-bede-lts-headers>=4.1' 'linux-bede-lts-headers<4.2' "nvidia-340xx-utils=$pkgver" "nvidia-340xx-libgl=$pkgver")
 conflicts=('nvidia-bede-lts')
 provides=('nvidia')
 license=('custom')
