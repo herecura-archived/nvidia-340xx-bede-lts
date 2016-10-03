@@ -4,23 +4,33 @@
 
 _pkgname=nvidia
 pkgname=$_pkgname-340xx-bede-lts
-pkgver=340.96
-_extramodules=4.1-BEDE-LTS-external
-pkgrel=6
+pkgver=340.98
+_extramodules=4.4-BEDE-LTS-external
+_current_linux_version=4.4.23
+_next_linux_version=4.5
+pkgrel=1
 pkgdesc="NVIDIA 340xx drivers for linux-bede-lts"
 arch=('i686' 'x86_64')
 url="http://www.nvidia.com/"
-makedepends=('linux-bede-lts>=4.1.19' 'linux-bede-lts<4.2' 'linux-bede-lts-headers>=4.1' 'linux-bede-lts-headers<4.2' "nvidia-340xx-utils=$pkgver" "nvidia-340xx-libgl=$pkgver")
+makedepends=(
+    "linux-bede-lts>=$_current_linux_version"
+    "linux-bede-lts-headers>=$_current_linux_version"
+    "linux-bede-lts<$_next_linux_version"
+    "linux-bede-lts-headers<$_next_linux_version"
+    "nvidia-340xx-utils=$pkgver"
+    "nvidia-340xx-libgl=$pkgver"
+)
 conflicts=('nvidia-bede-lts')
 provides=('nvidia')
 license=('custom')
 install=nvidia.install
 options=(!strip)
 
-source_i686=("http://download.nvidia.com/XFree86/Linux-x86/$pkgver/NVIDIA-Linux-x86-$pkgver.run")
-source_x86_64=("http://download.nvidia.com/XFree86/Linux-x86_64/$pkgver/NVIDIA-Linux-x86_64-$pkgver-no-compat32.run")
-sha256sums_i686=('c40e2778cd1ab036a76e1896fe2f77c4aa7baa215dbbdb11a2f4c5f05e1a478e')
-sha256sums_x86_64=('280f9db2aea52cab42e141f0393604c7a6d43e7f65d3e60c2319c2674ecc14c4')
+source_i686=("http://us.download.nvidia.com/XFree86/Linux-x86/$pkgver/NVIDIA-Linux-x86-$pkgver.run")
+source_x86_64=("http://us.download.nvidia.com/XFree86/Linux-x86_64/$pkgver/NVIDIA-Linux-x86_64-$pkgver-no-compat32.run")
+
+sha256sums_i686=('7d18bac3f570d72e3aae9dd2b74f53f9aa7b07bd5b1c2d3d1a9ae2f8104752e0')
+sha256sums_x86_64=('10c1603b1efad194d3c443f493b1e4362701c795a78aa258503b2272841b36e1')
 
 [[ "$CARCH" = "i686" ]] && _pkg="NVIDIA-Linux-x86-${pkgver}"
 [[ "$CARCH" = "x86_64" ]] && _pkg="NVIDIA-Linux-x86_64-${pkgver}-no-compat32"
@@ -44,7 +54,12 @@ build() {
 }
 
 package() {
-    depends=('linux-bede-lts>=4.1' 'linux-bede-lts<4.2' "nvidia-340xx-utils=$pkgver" "nvidia-340xx-libgl=$pkgver")
+    depends=(
+        "linux-bede-lts>=$_current_linux_version"
+        "linux-bede-lts<$_next_linux_version"
+        "nvidia-340xx-utils=$pkgver"
+        "nvidia-340xx-libgl=$pkgver"
+    )
 
     install -Dm644 "$srcdir/$_pkg/kernel/nvidia.ko" \
         "$pkgdir/usr/lib/modules/$_extramodules/$_pkgname/nvidia.ko"
